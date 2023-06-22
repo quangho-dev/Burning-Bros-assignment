@@ -16,7 +16,7 @@ const App: React.FC = () => {
 
   const observer = useRef<IntersectionObserver | null>();
   const lastProductElementRef = useCallback(
-    (node) => {
+    (node: HTMLElement | null) => {
       if (loading) return;
       if (observer.current) observer.current.disconnect();
 

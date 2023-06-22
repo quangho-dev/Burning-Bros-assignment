@@ -2,8 +2,16 @@ import React from "react";
 import SingleProduct from "./SingleProduct";
 import TheLastProductInList from "./TheLastProductInList";
 import SearchInput from "./SearchInput";
+import { Product } from "../models/models";
 
-const ProductList = ({
+interface Props {
+  products: Array<Product>;
+  handleSearch: (e: React.ChangeEvent<HTMLInputElement>) => void;
+  query: string;
+  lastProductElementRef: (node: HTMLElement | null) => void;
+}
+
+const ProductList: React.FC<Props> = ({
   products,
   handleSearch,
   query,
