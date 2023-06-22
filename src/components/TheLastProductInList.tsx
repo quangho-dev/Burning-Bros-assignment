@@ -1,6 +1,12 @@
 import React from "react";
+import { Product } from "../models/models";
 
-const TheLastProductInList = ({ product, lastProductElementRef }) => {
+interface Props {
+  product: Product;
+  lastProductElementRef: (node: HTMLElement | null) => void;
+}
+
+const TheLastProductInList:  React.FC<Props> = ({ product, lastProductElementRef }) => {
   return (
     <div ref={lastProductElementRef} key={product.id} className="product-card">
       <p>

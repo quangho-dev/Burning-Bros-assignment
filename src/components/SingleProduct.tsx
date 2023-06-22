@@ -1,6 +1,11 @@
 import React from "react";
+import { Product } from "../models/models";
 
-const SingleProduct = ({ product }) => {
+interface Props {
+  product: Product;
+}
+
+const SingleProduct: React.FC<Props> = ({ product }) => {
   return (
     <div key={product.id} className="product-card">
       <p>

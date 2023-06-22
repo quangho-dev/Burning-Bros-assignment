@@ -1,17 +1,28 @@
 import { useEffect, useState } from "react";
-import axios from "axios";
+import axios, { Canceler } from "axios";
+import { Product } from "../models/models";
 
-export default function useProductSearch(query, limit, skip) {
-  const [loading, setLoading] = useState(true);
-  const [error, setError] = useState(false);
-  const [products, setProducts] = useState([]);
-  const [hasMore, setHasMore] = useState(false);
+export default function useProductSearch(
+  query: string,
+  limit: number,
+  skip: number
+) {
+  const [loading, setLoading] = useState<boolean>(true);
+  const [error, setError] = useState<boolean>(false);
+  const [products, setProducts] = useState<Product[]>([]);
+  const [hasMore, setHasMore] = useState<boolean>(false);
+
+  useEffect(() => {
+    setProducts([]);
+  }, [query]);
 
   useEffect(() => {
     setLoading(true);
     setError(false);
 
-    let cancel;
+    let cancel: Canceler;
+
+    // Search products by name
     if (query) {
       setProducts([]);
 
@@ -21,7 +32,6 @@ export default function useProductSearch(query, limit, skip) {
         cancelToken: new axios.CancelToken((c) => (cancel = c)),
       })
         .then((res) => {
-          console.log("res.data:", res.data);
           setProducts(res.data.products);
           setHasMore(false);
           setLoading(false);
@@ -31,13 +41,13 @@ export default function useProductSearch(query, limit, skip) {
           setError(true);
         });
     } else {
+      // Fetch products when scrolling
       axios({
         method: "GET",
         url: `https://dummyjson.com/products?skip=${skip}&limit=${limit}&select=title,price,images`,
         cancelToken: new axios.CancelToken((c) => (cancel = c)),
       })
         .then((res) => {
-          console.log("res.data:", res.data);
           setProducts((prevProducts) => {
             return [...prevProducts, ...res.data.products];
           });
