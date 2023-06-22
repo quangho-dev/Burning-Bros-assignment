@@ -47,7 +47,7 @@ const App: React.FC = () => {
 
       <div className="loading-and-error-container">
         <div>{loading && "Loading..."}</div>
-        <div>{error && "Error"}</div>
+        <div>{error && "There is some error."}</div>
       </div>
     </>
   );

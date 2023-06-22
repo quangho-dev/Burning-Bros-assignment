@@ -24,8 +24,6 @@ export default function useProductSearch(
 
     // Search products by name
     if (query) {
-      setProducts([]);
-
       axios({
         method: "GET",
         url: `https://dummyjson.com/products/search?q=${query}`,
